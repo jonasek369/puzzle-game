@@ -3,13 +3,10 @@ import os
 import random
 import threading
 import time
-
 import keyboard
-from colorama import Fore
 
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 from pygame import mixer
-
 from musicEngine import musicEngine
 from mapGenerator import mapGenerator
 
@@ -21,8 +18,6 @@ cr = "+-------------------------------------------------------------------------
 max_vol = 1
 min_vol = 0.01
 curr_vol = 0.01
-
-"ghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
 class player:
@@ -194,8 +189,7 @@ def collision_check(direction):
                         if mapGen.map[mapGen.map[mapGen.map[p.position][direction]][direction]]["biom"] == "locked_box":
                             return False
                     if mapGen.map[mapGen.map[p.position][direction]][direction] is not None:
-                        if mapGen.map[mapGen.map[mapGen.map[p.position][direction]][direction]][
-                            "biom"] == "destination":
+                        if mapGen.map[mapGen.map[mapGen.map[p.position][direction]][direction]]["biom"] == "destination":
                             mapGen.map[mapGen.map[mapGen.map[p.position][direction]][direction]]["biom"] = "locked_box"
                             mapGen.map[mapGen.map[p.position][direction]]["biom"] = "land"
                             p.position = mapGen.map[p.position][direction]
