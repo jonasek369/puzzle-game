@@ -2,9 +2,14 @@ import time
 import random
 from colorama import Fore
 
+
 class mapGenerator:
     def __init__(self, current_level, preset="abcdefghij"):
-        # preset needs to start with A
+        """
+        :param current_level: Int : number of current level
+        :param preset: Ste : string of level layout
+        """
+
         self.map = dict()
         self.biom_info = {"land": 0, "box": 0, "destination": 0}
         self.torf = [
@@ -17,14 +22,14 @@ class mapGenerator:
         self.borders = []
 
         for i in range(len(self.alphabet)):
-            self.borders.append(f"a{i + 1}")
+            self.borders.append(f"{preset[0]}{i + 1}")
         for i in self.alphabet:
             self.borders.append(f"{i}1")
         for i in range(len(self.alphabet)):
             self.borders.append(f"{self.alphabet[len(self.alphabet) - 1]}{i + 1}")
         for i in self.alphabet:
             self.borders.append(f"{i}{len(self.alphabet)}")
-
+        # all directions used in game
         self.directions = [
             "up",
             "down",
@@ -32,6 +37,7 @@ class mapGenerator:
             "right"
         ]
 
+        # biom/tile type
         self.bioms = [
             "land",
             "box",
@@ -39,6 +45,10 @@ class mapGenerator:
         ]
 
     def generate_map(self, debugger=False):
+        """
+        :param debugger: Bool : T/F if you want to see debugger info for normal game False
+        :return:
+        """
         if debugger:
             start = time.time()
         for pos, x in enumerate(self.alphabet):
@@ -49,7 +59,6 @@ class mapGenerator:
 
                 self.map[f"{x}{y}"] = {
                     "cords": f"{x}{y}",
-                    "examined": False,
                     "biom": "",
                     "up": up,
                     "left": left,
@@ -59,11 +68,13 @@ class mapGenerator:
 
         if debugger:
             print("generated map with layout of", self.alphabet, "took", round(time.time() - start, 10) * 1000, "ms")
-            if round(time.time() - start, 10) * 1000 > 100:
-                print("possible buffer overload")
         return self.map
 
     def generate_bioms(self, debugger=False):
+        """
+        :param debugger: Bool : T/F if you want to see debugger info for normal game False
+        :return:
+        """
         if debugger:
             start = time.time()
         self.biom_info["box"] = 0
@@ -105,6 +116,11 @@ class mapGenerator:
             print("created bioms with set of", self.biom_info, "took", round(time.time() - start, 10) * 1000, "ms")
 
     def show_map(self, player_pos):
+        # render fuction
+        """
+        :param player_pos: Str : example a1 pos of user for displaying on map
+        :return:
+        """
         form_map = ""
         for i in self.map:
             if self.map[i]["cords"] == player_pos:
@@ -157,6 +173,12 @@ class mapGenerator:
         return form_map
 
     def create_cords_for_axies(self, x, y, pos):
+        """
+        :param x: Str : examole a or h visit generate_map() line 53
+        :param y: Int : examole 1 or 3 visit generate_map() line 54
+        :param pos: Int : pos in  enumrate of the preset visit generate_map() line 53
+        :return:
+        """
         if pos - 1 >= 0:
             try:
                 up = str(self.alphabet[pos - 1]) + str(y)
@@ -186,7 +208,8 @@ class mapGenerator:
         return up, down, left, right
 
     def create_new_level(self):
+        # cleares current map and create map with +1 level
         self.map.clear()
         self.max_boxes += 1
-        mapGenerator.generate_map(self, debugger=False)
-        mapGenerator.generate_bioms(self, debugger=False)
+        mapGenerator.generate_map(self, debugger=False)  # enabled debugger for more info (timing)
+        mapGenerator.generate_bioms(self, debugger=False)  # enabled debugger for more info (timing)
