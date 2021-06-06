@@ -176,7 +176,7 @@ class mapGenerator:
         """
         :param x: Str : examole a or h
         :param y: Int : examole 1 or 3
-        :param pos: Int : pos in  enumrate of the preset visit generate_map() line 53
+        :param pos: Int : pos in  enumrate of the preset
         :return:
         """
         if pos - 1 >= 0:
