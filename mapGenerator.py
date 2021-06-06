@@ -174,8 +174,8 @@ class mapGenerator:
 
     def create_cords_for_axies(self, x, y, pos):
         """
-        :param x: Str : examole a or h visit generate_map() line 53
-        :param y: Int : examole 1 or 3 visit generate_map() line 54
+        :param x: Str : examole a or h
+        :param y: Int : examole 1 or 3
         :param pos: Int : pos in  enumrate of the preset visit generate_map() line 53
         :return:
         """
